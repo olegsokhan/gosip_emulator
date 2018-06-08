@@ -25,9 +25,7 @@ class Node:
         del self.otherServerPorts[index]
 
     def setMsg(self, msg, fromNode):
-        # print("server: "+str(self.index)+", setMsg: " + str(msg))
         for i in range(0, len(self.msgsCache)):
-            # print("server: "+str(self.index)+", self.msgsCache[i]: " + self.msgsCache[i])
             if self.msgsCache[i] == str(msg):
                 return
         self.msgsCache.append(msg)
@@ -53,9 +51,7 @@ class ImprovedNode:
         del self.otherServerPorts[index]
 
     def setMsg(self, msg, fromNode):
-        # print("server: "+str(self.index)+", setMsg: " + str(msg))
         for i in range(0, len(self.msgsCache)):
-            # print("server: "+str(self.index)+", self.msgsCache[i]: " + self.msgsCache[i])
             if self.msgsCache[i] == str(msg):
                 return
         self.msgsCache.append(msg)
@@ -72,12 +68,6 @@ class ImprovedNode:
                 serverIndexesToSendMesg.append(randNum)
                 sendFromToList.append(str(self.index) + "," + str(randNum)+","+str(msg))
 
-# for i in range(0, 20):
-#     servers.append(Node(i, list(range(0, 20))))
-
-# random.choice(servers).setMsg("msg")
-
-# print(sendFromToList)
 notReceivedTimes = 0
 iterations = 0
 totalIterations = 0
@@ -86,8 +76,8 @@ for z in range(0, iParamter):
     sendFromToList = []
 
     if runMyAlgorithm == 1:
-        for i in range(0, 20):
-            servers.append(ImprovedNode(i, list(range(0, 20))))
+        for i in range(0, nParameter):
+            servers.append(ImprovedNode(i, list(range(0, nParameter))))
         random.choice(servers).setMsg("msg", "-1")
     else:
         for i in range(0, nParameter):
@@ -103,11 +93,9 @@ for z in range(0, iParamter):
             servers[int(data[1])].setMsg(data[2], data[0])
     for p in range(0, len(servers)):
         if(len(servers[p].msgsCache) == 0):
-            # print("servers with index : " + str(p) + " don't receive msg")
             notReceivedTimes+=1
     totalIterations += iterations
-    # print("alg was finished in: " + str(iterations) + " iterations")
     iterations = 0
 
-print("Total qty of iterations: " + str(totalIterations)+", average qty of iterations: " + str(totalIterations / 1000))
-print("In " + str(100 - (notReceivedTimes / 1000 * 100)) + "% cases all nodes received the packet")
+print("Total qty of iterations: " + str(totalIterations)+", average qty of iterations: " + str(totalIterations / iParamter))
+print("In " + str(100 - (notReceivedTimes / iParamter * 100)) + "% cases all nodes received the packet")
